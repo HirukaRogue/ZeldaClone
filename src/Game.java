@@ -25,7 +25,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public void tick() {
-
+        //entity tick
+        player.tick();
     }
 
     public void render() {
@@ -55,6 +56,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
         frame.add(game);
         frame.setTitle("Zelda Clone");
         frame.pack();
+
+        //controls
+        frame.addKeyListener(game);
 
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,20 +91,36 @@ public class Game extends Canvas implements Runnable, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_RIGHT -> player.right = true;
-            case KeyEvent.VK_LEFT -> player.left = true;
-            case KeyEvent.VK_UP -> player.up = true;
-            case KeyEvent.VK_DOWN -> player.down = true;
+            case KeyEvent.VK_RIGHT:
+                player.right = true;
+                break;
+            case KeyEvent.VK_LEFT:
+                player.left = true;
+                break;
+            case KeyEvent.VK_UP:
+                player.up = true;
+                break;
+            case KeyEvent.VK_DOWN:
+                player.down = true;
+                break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_RIGHT -> player.right = false;
-            case KeyEvent.VK_LEFT -> player.left = false;
-            case KeyEvent.VK_UP -> player.up = false;
-            case KeyEvent.VK_DOWN -> player.down = false;
+            case KeyEvent.VK_RIGHT:
+                player.right = false;
+                break;
+            case KeyEvent.VK_LEFT:
+                player.left = false;
+                break;
+            case KeyEvent.VK_UP:
+                player.up = false;
+                break;
+            case KeyEvent.VK_DOWN:
+                player.down = false;
+                break;
         }
     }
 }

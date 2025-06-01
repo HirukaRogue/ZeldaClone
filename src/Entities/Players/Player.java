@@ -19,16 +19,20 @@ public class Player extends Rectangle {
 
     public void tick() {
         if (right) {
+            System.out.println("right = " + right);
             x+=spd;
         }
         if (left) {
+            System.out.println("left = " + left);
             x-=spd;
         }
 
         if (up) {
+            System.out.println("up = " + up);
             y-=spd;
         }
         if (down) {
+            System.out.println("down = " + down);
             y+=spd;
         }
 
