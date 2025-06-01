@@ -1,19 +1,27 @@
+import Entities.Players.Player;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Game extends Canvas implements Runnable {
+public class Game extends Canvas implements Runnable, KeyListener {
 
     //screen dimensions
     public static int WIDTH = 480;
     public static int HEIGHT = 480;
 
-
+    //Entities
+    public Player player;
 
     public Game() {
+        this.addKeyListener(this);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+        player = new Player(0,0);
     }
 
     public void tick() {
@@ -34,8 +42,8 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.black);
         g.fillRect(0,0,WIDTH,HEIGHT);
 
-        g.setColor(Color.GREEN);
-        g.fillRect(0,0,50,50);
+        //entities
+        player.render(g);
 
         bs.show();
     }
@@ -69,5 +77,30 @@ public class Game extends Canvas implements Runnable {
             }
         }
 
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_RIGHT -> player.right = true;
+            case KeyEvent.VK_LEFT -> player.left = true;
+            case KeyEvent.VK_UP -> player.up = true;
+            case KeyEvent.VK_DOWN -> player.down = true;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_RIGHT -> player.right = false;
+            case KeyEvent.VK_LEFT -> player.left = false;
+            case KeyEvent.VK_UP -> player.up = false;
+            case KeyEvent.VK_DOWN -> player.down = false;
+        }
     }
 }
