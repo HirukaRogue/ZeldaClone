@@ -1,4 +1,5 @@
 import Entities.Players.Player;
+import Entities.Players.Spritesheet;
 import World.World;
 
 import javax.swing.*;
@@ -24,6 +25,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public Game() {
         this.addKeyListener(this);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+        //sprite load
+        new Spritesheet();
 
         //entities
         player = new Player(32,32);

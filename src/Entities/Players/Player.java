@@ -37,8 +37,10 @@ public class Player extends Rectangle {
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillRect(x, y, width, height);
+        //g.setColor(Color.BLUE);
+        //g.fillRect(x, y, width, height);
+
+        g.drawImage(Spritesheet.player_front, x, y, 31, 32, null);
     }
 
 }
