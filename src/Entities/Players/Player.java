@@ -1,5 +1,7 @@
 package Entities.Players;
 
+import World.World;
+
 import java.awt.*;
 
 public class Player extends Rectangle {
@@ -18,21 +20,17 @@ public class Player extends Rectangle {
     }
 
     public void tick() {
-        if (right) {
-            System.out.println("right = " + right);
+        if (right && World.isFree(x+spd, y)) {
             x+=spd;
         }
-        if (left) {
-            System.out.println("left = " + left);
+        if (left && World.isFree(x-spd, y)) {
             x-=spd;
         }
 
-        if (up) {
-            System.out.println("up = " + up);
+        if (up && World.isFree(x, y-spd)) {
             y-=spd;
         }
-        if (down) {
-            System.out.println("down = " + down);
+        if (down && World.isFree(x, y+spd)) {
             y+=spd;
         }
 

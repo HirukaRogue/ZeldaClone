@@ -1,4 +1,5 @@
 import Entities.Players.Player;
+import World.World;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,11 +18,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
     //Entities
     public Player player;
 
+    //World
+    public World world;
+
     public Game() {
         this.addKeyListener(this);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        player = new Player(0,0);
+        //entities
+        player = new Player(32,32);
+
+        //world
+        world = new World();
     }
 
     public void tick() {
@@ -45,6 +53,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         //entities
         player.render(g);
+
+        //world
+        world.render(g);
 
         bs.show();
     }
