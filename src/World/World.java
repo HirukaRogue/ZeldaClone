@@ -9,18 +9,18 @@ public class World {
     public static List<Blocks> blocks = new ArrayList<Blocks>();
 
     public World() {
-        for (int xa = 0; xa < 15; xa++) {
+        for (int xa = 0; xa < 19; xa++) {
             blocks.add(new Blocks(xa*32, 0));
         }
-        for (int xa = 0; xa < 15; xa++) {
-            blocks.add(new Blocks(xa*32, 480+-32));
+        for (int xa = 0; xa < 19; xa++) {
+            blocks.add(new Blocks(xa*32, 480-32));
         }
 
         for (int ya = 0; ya < 15; ya++) {
             blocks.add(new Blocks(0, ya*32));
         }
         for (int ya = 0; ya < 15; ya++) {
-            blocks.add(new Blocks(480+-32, ya*32));
+            blocks.add(new Blocks(640-32, ya*32));
         }
     }
 

@@ -13,8 +13,11 @@ import java.awt.image.BufferStrategy;
 public class Game extends Canvas implements Runnable, KeyListener {
 
     //screen dimensions
-    public static int WIDTH = 480;
+    public static int WIDTH = 640;
     public static int HEIGHT = 480;
+
+    //Scale
+    public static int SCALE = 3;
 
     //Entities
     public Player player;
@@ -53,7 +56,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         //cleaner
         g.setColor(Color.black);
-        g.fillRect(0,0,WIDTH,HEIGHT);
+        g.fillRect(0,0,WIDTH*SCALE,HEIGHT*SCALE);
 
         //entities
         player.render(g);
