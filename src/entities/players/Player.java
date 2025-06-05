@@ -1,8 +1,12 @@
-package Entities.Players;
+package entities.players;
 
-import World.World;
+import entities.enemies.Enemy;
+import entities.projectiles.Bullet;
+import world.World;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Rectangle {
 
@@ -13,13 +17,20 @@ public class Player extends Rectangle {
     public boolean left;
     public int aniDirection = 2;
 
+    //player speed
+    public int spd = 4;
+
     //animation setup
     public int curAnimation = 0;
     public int curFrames = 0;
     public int targetFrames = 15;
 
-    //player speed
-    public int spd = 4;
+    //bullets
+    public static List<Bullet> bullets = new ArrayList<Bullet>();
+    public static List<Bullet> pendingRemove = new ArrayList<>();
+
+    //shoot action
+    public boolean shoot = false;
 
     public Player(int x, int y) {
         super(x, y, 32, 32);
@@ -59,6 +70,44 @@ public class Player extends Rectangle {
                 }
             }
         }
+
+        if (shoot) {
+            shoot = false;
+            switch (aniDirection) {
+                case 2:
+                    bullets.add(new Bullet(x+width, y+(width/2), 1,0));
+                    break;
+                case 4:
+                    bullets.add(new Bullet(x, y+(width/2), -1,0));
+                    break;
+                case 1:
+                    bullets.add(new Bullet(x+(height/2), y+height, 0,1));
+                    break;
+                case 3:
+                    bullets.add(new Bullet(x+(height/2), y, 0,-1));
+                    break;
+            }
+        }
+
+        for (Bullet bullet : bullets) {
+            bullet.tick();
+        }
+
+        for (Bullet bullet : pendingRemove) {
+            bullets.remove(bullet);
+        }
+
+        pendingRemove.clear();
+    }
+
+    public Enemy enemyKilled(Enemy enemy) {
+        for (Bullet bullet : bullets) {
+            if (bullet.hit(enemy)) {
+                return enemy;
+            }
+        }
+
+        return null;
     }
 
     public void render(Graphics g) {
@@ -78,6 +127,10 @@ public class Player extends Rectangle {
             case 4:
                 g.drawImage(Spritesheet.player_side[curAnimation], x + 31, y, -31, 32, null);
                 break;
+        }
+
+        for (Bullet bullet : bullets) {
+            bullet.render(g);
         }
 
     }

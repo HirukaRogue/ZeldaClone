@@ -1,12 +1,17 @@
-import Entities.Players.Player;
-import Entities.Players.Spritesheet;
-import World.World;
+package Game;
+
+import entities.enemies.Enemy;
+import entities.players.Player;
+import entities.players.Spritesheet;
+import world.World;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -21,6 +26,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     //Entities
     public Player player;
+    public List<Enemy> enemies = new ArrayList<>();
+    public List<Enemy> deadEnemies = new ArrayList<>();
 
     //World
     public World world;
@@ -33,7 +40,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
         new Spritesheet();
 
         //entities
+        //player
         player = new Player(32,32);
+        //enemies
+        enemies.add(new Enemy(64,64));
+        enemies.add(new Enemy(64,128));
+        enemies.add(new Enemy(32,128));
 
         //world
         world = new World();
@@ -42,6 +54,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void tick() {
         //entity tick
         player.tick();
+
+        for (Enemy enemy : enemies) {
+            enemy.tick();
+            Enemy dead = player.enemyKilled(enemy);
+            if (dead != null) {
+                deadEnemies.add(dead);
+            }
+        }
+
+        for (Enemy dead : deadEnemies) {
+            enemies.remove(dead);
+        }
     }
 
     public void render() {
@@ -59,7 +83,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
         g.fillRect(0,0,WIDTH*SCALE,HEIGHT*SCALE);
 
         //entities
+        //player
         player.render(g);
+        //enemies
+        for (Enemy enemy : enemies) {
+            enemy.render(g);
+        }
 
         //world
         world.render(g);
@@ -121,6 +150,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
             case KeyEvent.VK_DOWN:
                 player.down = true;
                 break;
+            case KeyEvent.VK_X:
+                player.shoot = true;
         }
     }
 

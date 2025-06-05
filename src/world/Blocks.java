@@ -1,6 +1,6 @@
-package World;
+package world;
 
-import Entities.Players.Spritesheet;
+import entities.players.Spritesheet;
 
 import java.awt.*;
 
