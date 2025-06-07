@@ -93,28 +93,31 @@ public class Enemy extends Rectangle {
 
     public void chasePlayer(){
         Player p = Game.player;
-        if (x < p.x && World.isFree(x+spd, y)) {
-            if(new Random().nextInt(100) > 50) {
-                x+=spd;
-                aniDirection = 2;
+
+        if (p != null) {
+            if (x < p.x && World.isFree(x + spd, y)) {
+                if (new Random().nextInt(100) > 50) {
+                    x += spd;
+                    aniDirection = 2;
+                }
             }
-        }
-        if (x > p.x && World.isFree(x-spd, y)) {
-            if(new Random().nextInt(100) > 50) {
-                x -= spd;
-                aniDirection = 4;
+            if (x > p.x && World.isFree(x - spd, y)) {
+                if (new Random().nextInt(100) > 50) {
+                    x -= spd;
+                    aniDirection = 4;
+                }
             }
-        }
-        if (y < p.y && World.isFree(x, y+spd)) {
-            if(new Random().nextInt(100) > 50) {
-                y += spd;
-                aniDirection = 3;
+            if (y < p.y && World.isFree(x, y + spd)) {
+                if (new Random().nextInt(100) > 50) {
+                    y += spd;
+                    aniDirection = 3;
+                }
             }
-        }
-        if (y > p.y && World.isFree(x, y-spd)) {
-            if(new Random().nextInt(100) > 50) {
-                y -= spd;
-                aniDirection = 1;
+            if (y > p.y && World.isFree(x, y - spd)) {
+                if (new Random().nextInt(100) > 50) {
+                    y -= spd;
+                    aniDirection = 1;
+                }
             }
         }
     }

@@ -53,7 +53,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     public void tick() {
         //entity tick
-        player.tick();
+        if (player != null) {
+            player.tick();
+        }
 
         for (Enemy enemy : enemies) {
             enemy.tick();
@@ -87,7 +89,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         //entities
         //player
-        player.render(g);
+        if (player != null) {
+            player.render(g);
+        }
         //enemies
         for (Enemy enemy : enemies) {
             enemy.render(g);
