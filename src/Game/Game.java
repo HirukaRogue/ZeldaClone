@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static int SCALE = 3;
 
     //Entities
-    public Player player;
+    public static Player player;
     public List<Enemy> enemies = new ArrayList<>();
     public List<Enemy> deadEnemies = new ArrayList<>();
 
@@ -43,9 +43,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
         //player
         player = new Player(32,32);
         //enemies
-        enemies.add(new Enemy(64,64));
-        enemies.add(new Enemy(64,128));
-        enemies.add(new Enemy(32,128));
+        enemies.add(new Enemy(224,192));
+        enemies.add(new Enemy(224,224));
+        enemies.add(new Enemy(128,192));
 
         //world
         world = new World();
@@ -60,6 +60,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
             Enemy dead = player.enemyKilled(enemy);
             if (dead != null) {
                 deadEnemies.add(dead);
+            }
+            if (enemy.gameover(player)) {
+                player = null;
             }
         }
 

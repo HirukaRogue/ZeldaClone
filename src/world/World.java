@@ -22,6 +22,10 @@ public class World {
         for (int ya = 0; ya < 15; ya++) {
             blocks.add(new Blocks(640-32, ya*32));
         }
+
+        blocks.add(new Blocks(170, 200));
+        blocks.add(new Blocks(170, 400));
+        blocks.add(new Blocks(80, 250));
     }
 
     public static boolean isFree(int x, int y) {

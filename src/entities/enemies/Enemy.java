@@ -15,10 +15,6 @@ import java.util.Random;
 public class Enemy extends Rectangle {
 
     //directions
-    public boolean up;
-    public boolean down;
-    public boolean right;
-    public boolean left;
     public int aniDirection = 2;
 
     //player speed
@@ -28,8 +24,6 @@ public class Enemy extends Rectangle {
     public int curAnimation = 0;
     public int curFrames = 0;
     public int targetFrames = 15;
-    public int aiFrames = 0;
-    public int aiTargetFrames = 20;
 
     //bullets
     public static List<Bullet> bullets = new ArrayList<Bullet>();
@@ -43,57 +37,19 @@ public class Enemy extends Rectangle {
     }
 
     public void tick() {
-        aiFrames++;
-        if (aiFrames >= aiTargetFrames) {
-            Random tof = new Random();
-            up = tof.nextBoolean();
-            down = tof.nextBoolean();
-            left = tof.nextBoolean();
-            right = tof.nextBoolean();
+        this.chasePlayer();
 
-            while (up == down && up) {
-                up = tof.nextBoolean();
-                down = tof.nextBoolean();
+        curFrames++;
+        if (curFrames == targetFrames) {
+            curAnimation++;
+            curFrames = 0;
+            if (curAnimation > Spritesheet.player_front.length - 1) {
+                curAnimation = 0;
             }
-            while (left == right && left) {
-                left = tof.nextBoolean();
-                right = tof.nextBoolean();
-            }
-            aiFrames = 0;
         }
 
-        boolean moving = false;
-        if (right && World.isFree(x+spd, y)) {
-            x+=spd;
-            moving = true;
-            aniDirection = 2;
-        }
-        if (left && World.isFree(x-spd, y)) {
-            x-=spd;
-            moving = true;
-            aniDirection = 4;
-        }
-
-        if (up && World.isFree(x, y-spd)) {
-            y-=spd;
-            moving = true;
-            aniDirection = 3;
-        }
-        if (down && World.isFree(x, y+spd)) {
-            y+=spd;
-            moving = true;
-            aniDirection = 1;
-        }
-
-        if (moving) {
-            curFrames++;
-            if (curFrames == targetFrames) {
-                curAnimation++;
-                curFrames = 0;
-                if (curAnimation > Spritesheet.player_front.length - 1) {
-                    curAnimation = 0;
-                }
-            }
+        if (new Random().nextInt(100) > 98) {
+            shoot = true;
         }
 
         if (shoot) {
@@ -125,8 +81,42 @@ public class Enemy extends Rectangle {
         pendingRemove.clear();
     }
 
+    public boolean gameover(Player player) {
+        for (Bullet bullet : bullets) {
+            if (bullet.hit(player)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void chasePlayer(){
         Player p = Game.player;
+        if (x < p.x && World.isFree(x+spd, y)) {
+            if(new Random().nextInt(100) > 50) {
+                x+=spd;
+                aniDirection = 2;
+            }
+        }
+        if (x > p.x && World.isFree(x-spd, y)) {
+            if(new Random().nextInt(100) > 50) {
+                x -= spd;
+                aniDirection = 4;
+            }
+        }
+        if (y < p.y && World.isFree(x, y+spd)) {
+            if(new Random().nextInt(100) > 50) {
+                y += spd;
+                aniDirection = 3;
+            }
+        }
+        if (y > p.y && World.isFree(x, y-spd)) {
+            if(new Random().nextInt(100) > 50) {
+                y -= spd;
+                aniDirection = 1;
+            }
+        }
     }
 
     public void render(Graphics g) {

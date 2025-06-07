@@ -40,4 +40,8 @@ public class Bullet extends Rectangle {
         return enemy.intersects(this);
     }
 
+    public boolean hit(Player player) {
+        return player.intersects(this);
+    }
+
 }
