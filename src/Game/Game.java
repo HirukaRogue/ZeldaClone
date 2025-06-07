@@ -59,12 +59,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         for (Enemy enemy : enemies) {
             enemy.tick();
-            Enemy dead = player.enemyKilled(enemy);
-            if (dead != null) {
-                deadEnemies.add(dead);
-            }
-            if (enemy.gameover(player)) {
-                player = null;
+            if (player != null) {
+                Enemy dead = player.enemyKilled(enemy);
+                if (dead != null) {
+                    deadEnemies.add(dead);
+                }
+                if (enemy.gameover(player)) {
+                    player = null;
+                }
             }
         }
 
@@ -144,39 +146,43 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_RIGHT:
-                player.right = true;
-                break;
-            case KeyEvent.VK_LEFT:
-                player.left = true;
-                break;
-            case KeyEvent.VK_UP:
-                player.up = true;
-                break;
-            case KeyEvent.VK_DOWN:
-                player.down = true;
-                break;
-            case KeyEvent.VK_X:
-                player.shoot = true;
+        if (player != null) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_RIGHT:
+                    player.right = true;
+                    break;
+                case KeyEvent.VK_LEFT:
+                    player.left = true;
+                    break;
+                case KeyEvent.VK_UP:
+                    player.up = true;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    player.down = true;
+                    break;
+                case KeyEvent.VK_X:
+                    player.shoot = true;
+            }
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_RIGHT:
-                player.right = false;
-                break;
-            case KeyEvent.VK_LEFT:
-                player.left = false;
-                break;
-            case KeyEvent.VK_UP:
-                player.up = false;
-                break;
-            case KeyEvent.VK_DOWN:
-                player.down = false;
-                break;
+        if (player != null) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_RIGHT:
+                    player.right = false;
+                    break;
+                case KeyEvent.VK_LEFT:
+                    player.left = false;
+                    break;
+                case KeyEvent.VK_UP:
+                    player.up = false;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    player.down = false;
+                    break;
+            }
         }
     }
 }
